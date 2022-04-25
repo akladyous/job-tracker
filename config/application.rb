@@ -19,10 +19,15 @@ require "action_view/railtie"
 Bundler.require(*Rails.groups)
 
 module JobTracker
-  class Application < Rails::Application
+    class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
+    config.middleware.use ActionDispatch::Cookies
+    config.middleware.use ActionDispatch::Session::CookieStore
+    config.action_dispatch.cookies_same_site_protection = :strict # ensures that cookies are only shared on the same domain.
 
+    config.secret_key_base = '<%= ENV["SECRET_KEY_BASE"] %>'
+    config.active_storage.service = :local
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files
