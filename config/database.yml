@@ -2,22 +2,18 @@ default: &default
     adapter: postgresql
     encoding: unicode
     pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-    adapter: postgresql
-    encoding: unicode
-    pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
     database: job_tracker
-    username: boula
-    password: "password"
+    username: postgres
+    password: Rails.application.credentials.dig(:POSTGRES, :password)
+    host: localhost
     timeout: 5000
-    host: pg_host
+
 
 development:
   <<: *default
 
 production:
   <<: *default
-  database: job_tracker_production
-  username: job_tracker
   password: <%= ENV["JOB_TRACKER_DATABASE_PASSWORD"] %>
 
 # test:

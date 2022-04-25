@@ -1,0 +1,23 @@
+version: '2.2.3'
+
+volumes:
+  pgdata:
+    driver: local
+  application:
+    driver: local
+
+services:
+  pg_host:
+    image: postgres:alpine
+    container_name: 'pg'
+    # command: postgres://pguser@postgres:5432/pg
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: boula
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: job_tracker
+    restart: always
+    # restart: on-failure
+    ports:
+      - "5432:5432"
